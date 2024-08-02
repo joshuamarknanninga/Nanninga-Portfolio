@@ -10,6 +10,9 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
 
 body {
     line-height: 1;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/portfoliopic.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #desktop {
@@ -17,7 +20,7 @@ body {
     position: fixed;
     height: 100%;
     width: 100%;
-    background: #CCC;
+    /* background: #CCC; */
     overflow: hidden;
     top: 0;
     bottom: 0;
