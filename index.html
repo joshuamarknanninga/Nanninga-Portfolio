@@ -13,63 +13,82 @@
     <title>Nanninga Portfolio</title>
 </head>
 <body>
-    <div id="desktop">
-        <div id="background-logo">Joshua Mark Nanninga</div>
-        
-        <div class="window ui-draggable ui-draggable-handle" data-title="GitHub" data-id="0" id="window0">
-            
-            <!-- <div class="windowHeader"> -->
-                <!-- <strong>GitHub</strong> -->
-                <span title="Minimize" class="winminimize"></span>
-                <span title="Maximize" class="winmaximize"></span>
-                <span title="Close" class="winclose">https://github.com/joshuamarknanninga</span>
-                <svg>
-                    <use xlink:href="/your-path-to-fontawesome/sprites/fa-brands.svg#github"></use>
-                </svg>
-            </div>
-            <!-- <div class="wincontent ui-resizable">
-                GitHub content
-            </div> -->
-        </div>
-        
-        <div class="window ui-draggable ui-draggable-handle" data-title="Resume" data-id="1" id="window1">
-            <!-- <div class="windowHeader">
-                <strong>Resume</strong> -->
-                <span title="Minimize" class="winminimize"><span></span></span>
-                <span title="Maximize" class="winmaximize"><span></span><span></span></span>
-                <span title="Close" class="winclose">https://docs.google.com/document/d/1-5ib3Twxru5y2Txst2JGF_NvUGPXX-9WH11FLsefOvM/edit?usp=sharing
-                </span>
-            </div>
-            <!-- <div class="wincontent ui-resizable">
-                Resume content
-            </div> -->
-        </div>
-        
-        <div class="window ui-draggable ui-draggable-handle" data-title="Blog" data-id="2" id="window2">
-            <!-- <div class="windowHeader">
-                <strong>Blog</strong> -->
-                <span title="Minimize" class="winminimize"><span></span></span>
-                <span title="Maximize" class="winmaximize"><span></span><span></span></span>
-                <span title="Close" class="winclose">https://wordpress.com/page/thehouse8.wordpress.com/436</span>
-            </div>
-            <!-- <div class="wincontent ui-resizable">
-                Blog content
-            </div> -->
-        </div>
-
-        <div id="taskbar">
-            <div class="taskbarPanel" id="minimPanel0" data-id="0">GitHub</div>
-            <div class="taskbarPanel" id="minimPanel1" data-id="1">Resume</div>
-            <div class="taskbarPanel" id="minimPanel2" data-id="2">Blog</div>
-        </div>
-        
-        <div id="icons">
-            
-            <a class="openWindow" data-id="0"><i class="fab fa-github"></i> GitHub</a>
-            <a class="openWindow" data-id="1"><i class="fas fa-file-alt"></i> Resume</a>
-            <a class="openWindow" data-id="2"><i class="fas fa-blog"></i> Blog</a>
-        </div>
-        <a href="https://html5-templates.com/" rel="nofollow" target="_blank" id="templateLink"></a>
-    </div>
-</body>
+    <body>
+        <header>
+            <h1>Joshua Mark Nanninga</h1>
+            <nav>
+                <ul>
+                    <li><a href="#github" class="openWindow" data-id="0">GitHub</a></li>
+                    <li><a href="#resume" class="openWindow" data-id="1">Resume</a></li>
+                    <li><a href="#projects" class="openWindow" data-id="2">Projects</a></li>
+                    <li><a href="#contact" class="openWindow" data-id="3">Leave a Message</a></li>
+                </ul>
+            </nav>
+        </header>
+    
+        <main id="desktop">
+            <section id="window0" class="window" data-title="GitHub" data-id="0">
+                <header>
+                    <h2>GitHub</h2>
+                    <button class="winminimize" aria-label="Minimize">-</button>
+                    <button class="winmaximize" aria-label="Maximize">[]</button>
+                    <button class="winclose" aria-label="Close">x</button>
+                </header>
+                <div class="wincontent">
+                    <a href="https://github.com/joshuamarknanninga" target="_blank">Visit My GitHub Profile</a>
+                </div>
+            </section>
+    
+            <section id="window1" class="window" data-title="Resume" data-id="1">
+                <header>
+                    <h2>Resume</h2>
+                    <button class="winminimize" aria-label="Minimize">-</button>
+                    <button class="winmaximize" aria-label="Maximize">[]</button>
+                    <button class="winclose" aria-label="Close">x</button>
+                </header>
+                <div class="wincontent">
+                    <p>Download my <a href="/resume.pdf" target="_blank">Resume</a></p>
+                </div>
+            </section>
+    
+            <section id="window2" class="window" data-title="Projects" data-id="2">
+                <header>
+                    <h2>Projects</h2>
+                    <button class="winminimize" aria-label="Minimize">-</button>
+                    <button class="winmaximize" aria-label="Maximize">[]</button>
+                    <button class="winclose" aria-label="Close">x</button>
+                </header>
+                <div class="wincontent">
+                    <ul>
+                        <li><a href="#project1">Project 1</a></li>
+                        <li><a href="#project2">Project 2</a></li>
+                    </ul>
+                </div>
+            </section>
+    
+            <section id="window3" class="window" data-title="Contact" data-id="3">
+                <header>
+                    <h2>Leave a Message</h2>
+                    <button class="winminimize" aria-label="Minimize">-</button>
+                    <button class="winmaximize" aria-label="Maximize">[]</button>
+                    <button class="winclose" aria-label="Close">x</button>
+                </header>
+                <div class="wincontent">
+                    <form id="contactForm">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" required><br><br>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required><br><br>
+                        <label for="message">Message:</label><br>
+                        <textarea id="message" name="message" rows="5" required></textarea><br><br>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+    
+        <footer>
+            <p>&copy; 2024 Joshua Mark Nanninga</p>
+        </footer>
+    </body>
 </html>
