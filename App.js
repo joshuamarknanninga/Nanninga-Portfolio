@@ -10,13 +10,16 @@ const getRandomPosition = () => {
 };
 
 function App() {
-  // State for managing visibility and positions of windows
-  const [windows, setWindows] = useState({
+  // Initial window states with visibility, minimized/maximized, and random positions
+  const initialWindowState = {
     window1: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
     window2: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
     window3: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
     window4: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
-  });
+  };
+
+  // State to manage window states
+  const [windows, setWindows] = useState(initialWindowState);
 
   const toggleWindow = (windowId, action) => {
     setWindows((prevWindows) => {
@@ -39,7 +42,7 @@ function App() {
               visible: true,
               minimized: false,
               maximized: false,
-              position: getRandomPosition(), // Randomly reposition the window on reopen
+              position: getRandomPosition(), // Reposition window on reopen
             },
           };
         case 'move':
@@ -50,6 +53,16 @@ function App() {
         default:
           return prevWindows;
       }
+    });
+  };
+
+  // Function to reset all windows
+  const resetWindows = () => {
+    setWindows({
+      window1: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+      window2: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+      window3: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+      window4: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
     });
   };
 
@@ -94,19 +107,15 @@ function App() {
         )
       ))}
 
-      {/* Reopen buttons */}
-      <div className="absolute bottom-5 left-5 space-x-4">
-        {Object.keys(windows).map((windowId) => (
-          !windows[windowId].visible && (
-            <button
-              key={`reopen-${windowId}`}
-              className="bg-blue-500 text-white p-2"
-              onClick={() => toggleWindow(windowId, 'reopen')}
-            >
-              Reopen {windowId.replace('window', 'Window ')}
-            </button>
-          )
-        ))}
+      {/* Reset Windows Link */}
+      <div className="absolute bottom-5 left-5">
+        <a
+          href="#"
+          onClick={resetWindows}
+          className="bg-red-500 text-white p-2 rounded shadow-lg"
+        >
+          Reset All Windows
+        </a>
       </div>
     </div>
   );
