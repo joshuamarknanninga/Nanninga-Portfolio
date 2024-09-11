@@ -2,93 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Joshua Mark Nanninga's professional portfolio, showcasing projects, resume, and skills.">
-    <meta name="keywords" content="Portfolio, Web Developer, Joshua Mark Nanninga, Projects, Resume">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrQkzDrXHK5eho0rF1dFfNm4FspLYsw8EQM5a3yM2GcGjSc9wZiKXkR4bBsTz+TjDkj1sb5O/QH2ZrbL8A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="/scripts.js"></script>
+    <meta name="description" content="Joshua Mark Nanninga's interactive portfolio with draggable windows and dynamic features.">
     <link rel="stylesheet" type="text/css" href="/styles.css">
-    <title>Nanninga Portfolio</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/scripts.js" defer></script>
+    <title>Nanninga Interactive Portfolio</title>
 </head>
 <body>
-    <body>
-        <header>
-            <h1>Joshua Mark Nanninga</h1>
-            <nav>
+    <div id="desktop">
+        <div id="window1" class="window" data-id="1">
+            <header class="window-header">
+                <h2>Window 1: About Me</h2>
+                <button class="minimize">-</button>
+                <button class="maximize">[]</button>
+                <button class="close">x</button>
+            </header>
+            <div class="window-content">
+                <p>Welcome to my portfolio! This window contains information about me.</p>
+            </div>
+        </div>
+
+        <div id="window2" class="window" data-id="2">
+            <header class="window-header">
+                <h2>Window 2: Projects</h2>
+                <button class="minimize">-</button>
+                <button class="maximize">[]</button>
+                <button class="close">x</button>
+            </header>
+            <div class="window-content">
                 <ul>
-                    <li><a href="#github" class="openWindow" data-id="0">GitHub</a></li>
-                    <li><a href="#resume" class="openWindow" data-id="1">Resume</a></li>
-                    <li><a href="#projects" class="openWindow" data-id="2">Projects</a></li>
-                    <li><a href="#contact" class="openWindow" data-id="3">Leave a Message</a></li>
+                    <li>Project 1</li>
+                    <li>Project 2</li>
                 </ul>
-            </nav>
-        </header>
-    
-        <main id="desktop">
-            <section id="window0" class="window" data-title="GitHub" data-id="0">
-                <header>
-                    <h2>GitHub</h2>
-                    <button class="winminimize" aria-label="Minimize">-</button>
-                    <button class="winmaximize" aria-label="Maximize">[]</button>
-                    <button class="winclose" aria-label="Close">x</button>
-                </header>
-                <div class="wincontent">
-                    <a href="https://github.com/joshuamarknanninga" target="_blank">Visit My GitHub Profile</a>
-                </div>
-            </section>
-    
-            <section id="window1" class="window" data-title="Resume" data-id="1">
-                <header>
-                    <h2>Resume</h2>
-                    <button class="winminimize" aria-label="Minimize">-</button>
-                    <button class="winmaximize" aria-label="Maximize">[]</button>
-                    <button class="winclose" aria-label="Close">x</button>
-                </header>
-                <div class="wincontent">
-                    <p>Download my <a href="/resume.pdf" target="_blank">Resume</a></p>
-                </div>
-            </section>
-    
-            <section id="window2" class="window" data-title="Projects" data-id="2">
-                <header>
-                    <h2>Projects</h2>
-                    <button class="winminimize" aria-label="Minimize">-</button>
-                    <button class="winmaximize" aria-label="Maximize">[]</button>
-                    <button class="winclose" aria-label="Close">x</button>
-                </header>
-                <div class="wincontent">
-                    <ul>
-                        <li><a href="#project1">Project 1</a></li>
-                        <li><a href="#project2">Project 2</a></li>
-                    </ul>
-                </div>
-            </section>
-    
-            <section id="window3" class="window" data-title="Contact" data-id="3">
-                <header>
-                    <h2>Leave a Message</h2>
-                    <button class="winminimize" aria-label="Minimize">-</button>
-                    <button class="winmaximize" aria-label="Maximize">[]</button>
-                    <button class="winclose" aria-label="Close">x</button>
-                </header>
-                <div class="wincontent">
-                    <form id="contactForm">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required><br><br>
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" required><br><br>
-                        <label for="message">Message:</label><br>
-                        <textarea id="message" name="message" rows="5" required></textarea><br><br>
-                        <button type="submit">Send Message</button>
-                    </form>
-                </div>
-            </section>
-        </main>
-    
-        <footer>
-            <p>&copy; 2024 Joshua Mark Nanninga</p>
-        </footer>
-    </body>
+            </div>
+        </div>
+
+        <div id="window3" class="window" data-id="3">
+            <header class="window-header">
+                <h2>Window 3: Resume</h2>
+                <button class="minimize">-</button>
+                <button class="maximize">[]</button>
+                <button class="close">x</button>
+            </header>
+            <div class="window-content">
+                <p>Download my <a href="#">Resume</a></p>
+            </div>
+        </div>
+
+        <div id="window4" class="window" data-id="4">
+            <header class="window-header">
+                <h2>Window 4: Contact</h2>
+                <button class="minimize">-</button>
+                <button class="maximize">[]</button>
+                <button class="close">x</button>
+            </header>
+            <div class="window-content">
+                <form>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                    <label for="message">Message:</label>
+                    <textarea id="message" rows="5" required></textarea>
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

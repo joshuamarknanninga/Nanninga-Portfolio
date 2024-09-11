@@ -1,132 +1,70 @@
-var i = 0,
-    minimizedWidth = new Array,
-    minimizedHeight = new Array,
-    windowTopPos = new Array,
-    windowLeftPos = new Array,
-    panel,
-    id;
-
-function adjustFullScreenSize() {
-    $(".fullSizeWindow .wincontent").css("width", (window.innerWidth - 32));
-    $(".fullSizeWindow .wincontent").css("height", (window.innerHeight - 98));
-}
-
-function makeWindowActive(thisid) {
-    $(".window").each(function() {
-        $(this).css('z-index', $(this).css('z-index') - 1);
-    });
-    $("#window" + thisid).css('z-index', 1000);
-    $(".window").removeClass("activeWindow");
-    $("#window" + thisid).addClass("activeWindow");
-
-    $(".taskbarPanel").removeClass('activeTab');
-    $("#minimPanel" + thisid).addClass("activeTab");
-}
-
-function minimizeWindow(id) {
-    windowTopPos[id] = $("#window" + id).css("top");
-    windowLeftPos[id] = $("#window" + id).css("left");
-
-    $("#window" + id).animate({
-        top: 800,
-        left: 0
-    }, 200, function() {
-        $("#window" + id).addClass('minimizedWindow');
-        $("#minimPanel" + id).addClass('minimizedTab');
-        $("#minimPanel" + id).removeClass('activeTab');
-    });
-}
-
-function openWindow(id) {
-    if ($('#window' + id).hasClass("minimizedWindow")) {
-        openMinimized(id);
-    } else {
-        makeWindowActive(id);
-        $("#window" + id).removeClass("closed");
-        $("#minimPanel" + id).removeClass("closed");
-    }
-}
-
-function closeWindow(id) {
-    $("#window" + id).addClass("closed");
-    $("#minimPanel" + id).addClass("closed");
-}
-
-function openMinimized(id) {
-    $('#window' + id).removeClass("minimizedWindow");
-    $('#minimPanel' + id).removeClass("minimizedTab");
-    makeWindowActive(id);
-
-    $('#window' + id).animate({
-        top: windowTopPos[id],
-        left: windowLeftPos[id]
-    }, 200);
-}
-
 $(document).ready(function() {
-    $(".window").each(function() {
-        $(this).css('z-index', 1000);
-        $(this).attr('data-id', i);
-        minimizedWidth[i] = $(this).width();
-        minimizedHeight[i] = $(this).height();
-        windowTopPos[i] = $(this).css("top");
-        windowLeftPos[i] = $(this).css("left");
-        $("#taskbar").append('<div class="taskbarPanel" id="minimPanel' + i + '" data-id="' + i + '">' + $(this).attr("data-title") + '</div>');
-        if ($(this).hasClass("closed")) {
-            $("#minimPanel" + i).addClass('closed');
-        }
-        $(this).attr('id', 'window' + (i++));
-        $(this).wrapInner('<div class="wincontent"></div>');
-        $(this).prepend('<div class="windowHeader"><strong>' + $(this).attr("data-title") + '</strong><span title="Minimize" class="winminimize"><span></span></span><span title="Maximize" class="winmaximize"><span></span><span></span></span><span title="Close" class="winclose">x</span></div>');
-    });
+    const minimizedHeight = [];
+    const minimizedWidth = [];
 
-    $("#minimPanel" + (i - 1)).addClass('activeTab');
-    $("#window" + (i - 1)).addClass('activeWindow');
-
-    $(".wincontent").resizable();
+    // Initialize windows functionality
     $(".window").draggable({ cancel: ".wincontent" });
+    $(".wincontent").resizable();
 
+    // Activate the clicked window
     $(".window").mousedown(function() {
         makeWindowActive($(this).attr("data-id"));
     });
 
+    // Close window function
     $(".winclose").click(function() {
-        closeWindow($(this).parent().parent().attr("data-id"));
+        const windowId = $(this).closest(".window").attr("data-id");
+        closeWindow(windowId);
     });
 
+    // Minimize window function
     $(".winminimize").click(function() {
-        minimizeWindow($(this).parent().parent().attr("data-id"));
+        const windowId = $(this).closest(".window").attr("data-id");
+        minimizeWindow(windowId);
     });
 
-    $(".taskbarPanel").click(function() {
-        id = $(this).attr("data-id");
-        if ($(this).hasClass("activeTab")) {
-            minimizeWindow($(this).attr("data-id"));
-        } else {
-            if ($(this).hasClass("minimizedTab")) {
-                openMinimized(id);
-            } else {
-                makeWindowActive(id);
-            }
-        }
-    });
-
-    $(".openWindow").click(function() {
-        openWindow($(this).attr("data-id"));
-    });
-
+    // Maximize window function
     $(".winmaximize").click(function() {
-        if ($(this).parent().parent().hasClass('fullSizeWindow')) {
-            $(this).parent().parent().removeClass('fullSizeWindow');
-            $(this).parent().parent().children(".wincontent").height(minimizedHeight[$(this).parent().parent().attr("data-id")]);
-            $(this).parent().parent().children(".wincontent").width(minimizedWidth[$(this).parent().parent().attr("data-id")]);
+        const windowElement = $(this).closest(".window");
+        const windowId = windowElement.attr("data-id");
+
+        if (windowElement.hasClass('fullSizeWindow')) {
+            windowElement.removeClass('fullSizeWindow');
+            windowElement.find(".wincontent").height(minimizedHeight[windowId]);
+            windowElement.find(".wincontent").width(minimizedWidth[windowId]);
         } else {
-            $(this).parent().parent().addClass('fullSizeWindow');
-            minimizedHeight[$(this).parent().parent().attr('data-id')] = $(this).parent().parent().children(".wincontent").height();
-            minimizedWidth[$(this).parent().parent().attr('data-id')] = $(this).parent().parent().children(".wincontent").width();
+            windowElement.addClass('fullSizeWindow');
+            minimizedHeight[windowId] = windowElement.find(".wincontent").height();
+            minimizedWidth[windowId] = windowElement.find(".wincontent").width();
             adjustFullScreenSize();
         }
     });
 
-    adjustFullScreenSize();
+    // Handle the taskbar click to minimize or restore windows
+    $(".taskbarPanel").click(function() {
+        const windowId = $(this).attr("data-id");
+        if ($(this).hasClass("activeTab")) {
+            minimizeWindow(windowId);
+        } else if ($(this).hasClass("minimizedTab")) {
+            openMinimized(windowId);
+        } else {
+            makeWindowActive(windowId);
+        }
+    });
+
+    // Function to adjust window size to fit the screen
+    function adjustFullScreenSize() {
+        $(".fullSizeWindow").css({
+            width: $(window).width(),
+            height: $(window).height()
+        });
+    }
+
+    // Handle form submission for contact window
+    $("#contactForm").submit(function(event) {
+        event.preventDefault();
+        alert("Your message has been sent!");
+        // Here you can handle form data submission (AJAX or other)
+        $(this)[0].reset(); // Reset the form fields
+    });
 });
