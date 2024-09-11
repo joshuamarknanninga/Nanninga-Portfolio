@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Window from './Window';
 import './tailwind.css';
 
-// Utility function to generate random positions
+// Utility function to generate random positions based on the viewport dimensions
 const getRandomPosition = () => {
-  const x = Math.floor(Math.random() * (window.innerWidth - 300)); // Random x within screen width (adjusted for window size)
-  const y = Math.floor(Math.random() * (window.innerHeight - 200)); // Random y within screen height (adjusted for window size)
+  const x = Math.floor(Math.random() * (window.innerWidth - 350)); // Window width assumed to be 350px
+  const y = Math.floor(Math.random() * (window.innerHeight - 250)); // Window height assumed to be 250px
   return { x, y };
 };
 
@@ -34,7 +34,13 @@ function App() {
         case 'reopen':
           return {
             ...prevWindows,
-            [windowId]: { ...currentWindow, visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+            [windowId]: {
+              ...currentWindow,
+              visible: true,
+              minimized: false,
+              maximized: false,
+              position: getRandomPosition(), // Randomly reposition the window on reopen
+            },
           };
         case 'move':
           return {
