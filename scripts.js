@@ -1,70 +1,32 @@
 $(document).ready(function() {
-    const minimizedHeight = [];
-    const minimizedWidth = [];
+    // Allow windows to be draggable and resizable
+    $(".window").draggable().resizable();
 
-    // Initialize windows functionality
-    $(".window").draggable({ cancel: ".wincontent" });
-    $(".wincontent").resizable();
-
-    // Activate the clicked window
+    // Bring window to front when clicked
     $(".window").mousedown(function() {
-        makeWindowActive($(this).attr("data-id"));
+        $(".window").css("z-index", 0);
+        $(this).css("z-index", 1);
     });
 
-    // Close window function
-    $(".winclose").click(function() {
-        const windowId = $(this).closest(".window").attr("data-id");
-        closeWindow(windowId);
+    // Minimize window
+    $(".minimize").click(function() {
+        $(this).closest(".window").find(".window-content").toggle();
     });
 
-    // Minimize window function
-    $(".winminimize").click(function() {
-        const windowId = $(this).closest(".window").attr("data-id");
-        minimizeWindow(windowId);
-    });
-
-    // Maximize window function
-    $(".winmaximize").click(function() {
+    // Maximize window
+    $(".maximize").click(function() {
         const windowElement = $(this).closest(".window");
-        const windowId = windowElement.attr("data-id");
-
-        if (windowElement.hasClass('fullSizeWindow')) {
-            windowElement.removeClass('fullSizeWindow');
-            windowElement.find(".wincontent").height(minimizedHeight[windowId]);
-            windowElement.find(".wincontent").width(minimizedWidth[windowId]);
+        if (windowElement.hasClass("fullScreen")) {
+            windowElement.removeClass("fullScreen");
+            windowElement.css({ width: "300px", height: "auto" });
         } else {
-            windowElement.addClass('fullSizeWindow');
-            minimizedHeight[windowId] = windowElement.find(".wincontent").height();
-            minimizedWidth[windowId] = windowElement.find(".wincontent").width();
-            adjustFullScreenSize();
+            windowElement.addClass("fullScreen");
+            windowElement.css({ width: "100vw", height: "100vh" });
         }
     });
 
-    // Handle the taskbar click to minimize or restore windows
-    $(".taskbarPanel").click(function() {
-        const windowId = $(this).attr("data-id");
-        if ($(this).hasClass("activeTab")) {
-            minimizeWindow(windowId);
-        } else if ($(this).hasClass("minimizedTab")) {
-            openMinimized(windowId);
-        } else {
-            makeWindowActive(windowId);
-        }
-    });
-
-    // Function to adjust window size to fit the screen
-    function adjustFullScreenSize() {
-        $(".fullSizeWindow").css({
-            width: $(window).width(),
-            height: $(window).height()
-        });
-    }
-
-    // Handle form submission for contact window
-    $("#contactForm").submit(function(event) {
-        event.preventDefault();
-        alert("Your message has been sent!");
-        // Here you can handle form data submission (AJAX or other)
-        $(this)[0].reset(); // Reset the form fields
+    // Close window
+    $(".close").click(function() {
+        $(this).closest(".window").hide();
     });
 });
