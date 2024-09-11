@@ -2,13 +2,20 @@ import React, { useState } from 'react';
 import Window from './Window';
 import './tailwind.css';
 
+// Utility function to generate random positions
+const getRandomPosition = () => {
+  const x = Math.floor(Math.random() * (window.innerWidth - 300)); // Random x within screen width (adjusted for window size)
+  const y = Math.floor(Math.random() * (window.innerHeight - 200)); // Random y within screen height (adjusted for window size)
+  return { x, y };
+};
+
 function App() {
-  // State for managing visibility of windows
+  // State for managing visibility and positions of windows
   const [windows, setWindows] = useState({
-    window1: { visible: true, minimized: false, maximized: false },
-    window2: { visible: true, minimized: false, maximized: false },
-    window3: { visible: true, minimized: false, maximized: false },
-    window4: { visible: true, minimized: false, maximized: false },
+    window1: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+    window2: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+    window3: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+    window4: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
   });
 
   const toggleWindow = (windowId, action) => {
@@ -16,13 +23,24 @@ function App() {
       const currentWindow = prevWindows[windowId];
       switch (action) {
         case 'close':
-          return { ...prevWindows, [windowId]: { ...currentWindow, visible: false } };
+          return {
+            ...prevWindows,
+            [windowId]: { ...currentWindow, visible: false },
+          };
         case 'minimize':
           return { ...prevWindows, [windowId]: { ...currentWindow, minimized: !currentWindow.minimized } };
         case 'maximize':
           return { ...prevWindows, [windowId]: { ...currentWindow, maximized: !currentWindow.maximized } };
         case 'reopen':
-          return { ...prevWindows, [windowId]: { ...currentWindow, visible: true, minimized: false, maximized: false } };
+          return {
+            ...prevWindows,
+            [windowId]: { ...currentWindow, visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+          };
+        case 'move':
+          return {
+            ...prevWindows,
+            [windowId]: { ...currentWindow, position: action.payload },
+          };
         default:
           return prevWindows;
       }
@@ -40,9 +58,11 @@ function App() {
             title={windowId.replace('window', 'Window ')}
             isMinimized={windows[windowId].minimized}
             isMaximized={windows[windowId].maximized}
+            position={windows[windowId].position}
             onClose={() => toggleWindow(windowId, 'close')}
             onMinimize={() => toggleWindow(windowId, 'minimize')}
             onMaximize={() => toggleWindow(windowId, 'maximize')}
+            onMove={(position) => toggleWindow(windowId, { type: 'move', payload: position })}
           >
             {/* Window content */}
             {windowId === 'window1' && <p>Welcome to my portfolio! This window contains information about me.</p>}

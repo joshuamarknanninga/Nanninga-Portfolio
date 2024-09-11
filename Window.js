@@ -1,9 +1,13 @@
 import React from 'react';
 import Draggable from 'react-draggable'; // For draggable functionality
 
-function Window({ title, isMinimized, isMaximized, onClose, onMinimize, onMaximize, children }) {
+function Window({ title, isMinimized, isMaximized, onClose, onMinimize, onMaximize, position, onMove, children }) {
+  const handleDrag = (e, data) => {
+    onMove({ x: data.x, y: data.y });
+  };
+
   return (
-    <Draggable handle=".window-header" bounds="parent">
+    <Draggable handle=".window-header" bounds="parent" position={position} onStop={handleDrag}>
       <div
         className={`window bg-white border shadow-lg ${isMaximized ? 'w-screen h-screen' : 'w-80 h-auto'} 
           ${isMinimized ? 'hidden' : 'block'} p-4 absolute`}
