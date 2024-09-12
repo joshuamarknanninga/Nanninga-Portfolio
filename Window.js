@@ -15,9 +15,29 @@ function Window({ title, isMinimized, isMaximized, onClose, onMinimize, onMaximi
         <div className="window-header bg-green-500 text-white p-2 flex justify-between items-center cursor-move">
           <h2>{title}</h2>
           <div>
-            <button className="bg-yellow-500 text-white px-2" onClick={onMinimize}>-</button>
-            <button className="bg-blue-500 text-white px-2" onClick={onMaximize}>[]</button>
-            <button className="bg-red-500 text-white px-2" onClick={onClose}>x</button>
+            {/* Minimize Button */}
+            <img
+              src="https://cdn.iconfinder.com/data/icons/feather/24/minimize-512.png" // Minimize Icon URL
+              alt="Minimize"
+              className="w-6 h-6 cursor-pointer inline-block mx-1"
+              onClick={onMinimize}
+            />
+
+            {/* Maximize Button */}
+            <img
+              src="https://cdn.iconfinder.com/data/icons/feather/24/maximize-512.png" // Maximize Icon URL
+              alt="Maximize"
+              className="w-6 h-6 cursor-pointer inline-block mx-1"
+              onClick={onMaximize}
+            />
+
+            {/* Close Button */}
+            <img
+              src="https://cdn.iconfinder.com/data/icons/feather/24/x-512.png" // Close Icon URL
+              alt="Close"
+              className="w-6 h-6 cursor-pointer inline-block mx-1"
+              onClick={onClose}
+            />
           </div>
         </div>
         <div className="window-content p-4">
