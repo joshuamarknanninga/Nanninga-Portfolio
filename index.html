@@ -11,22 +11,25 @@
     <script src="/scripts.js" defer></script>
     <title>Nanninga Interactive Portfolio</title>
 </head>
-<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition duration-500"></body>
-<!-- Dark Mode Toggle -->
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition duration-500">
+
+    <!-- Dark Mode Toggle -->
     <div class="flex justify-end p-4">
         <button id="theme-toggle" class="bg-gray-800 text-white py-2 px-4 rounded">Toggle Dark Mode</button>
     </div>
-<body>
+
+    <!-- Header -->
     <header class="text-center py-12">
         <h1 class="text-4xl font-bold">Joshua Mark Nanninga</h1>
         <p class="text-xl mt-2">Full-Stack Developer | Web Enthusiast</p>
     </header>
-            <div class="window-content">
-                <p>Welcome to my portfolio! I am a full stack programmer with previous experience in teaching high school and middle school.</p>
-            </div>
-        </div>
 
-        <!-- Projects Section -->
+    <!-- Introduction -->
+    <div class="window-content">
+        <p>Welcome to my portfolio! I am a full-stack programmer with previous experience in teaching high school and middle school.</p>
+    </div>
+
+    <!-- Projects Section -->
     <section id="projects" class="my-12">
         <h2 class="text-3xl font-semibold text-center mb-4">Projects</h2>
         <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -34,26 +37,27 @@
         </div>
     </section>
 
-        <div id="window3" class="window" data-id="3">
-            <header class="window-header">
-                <h2>Resume</h2>
-                <button class="minimize">-</button>
-                <button class="maximize">[]</button>
-                <button class="close">x</button>
-            </header>
-            <div class="window-content">
-                <p>Download my <a href="#">Resume</a></p>
-            </div>
+    <!-- Resume Window -->
+    <div id="window3" class="window" data-id="3">
+        <header class="window-header">
+            <h2>Resume</h2>
+            <button class="minimize">-</button>
+            <button class="maximize">[]</button>
+            <button class="close">x</button>
+        </header>
+        <div class="window-content">
+            <p>Download my <a href="#">Resume</a></p>
         </div>
+    </div>
 
-        <!-- Testimonials Section -->
+    <!-- Testimonials Section -->
     <section id="testimonials" class="my-12">
         <h2 class="text-3xl font-semibold text-center mb-4">Testimonials</h2>
         <div id="testimonials-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Testimonials will be inserted dynamically by JavaScript -->
         </div>
     </section>
-    </div>
+
     <!-- Footer -->
     <footer class="text-center py-6">
         <p>&copy; 2024 Joshua Mark Nanninga. All rights reserved.</p>
