@@ -1,28 +1,96 @@
 // App.js
 
-import React, { useState, useEffect, lazy, Suspense } from 'react';
-import StartMenu from './components/StartMenu';
+import React, { useState } from 'react';
+import Window from './Window';
+import StartMenu from './StartMenu'; // If implemented
 import './tailwind.css';
-import './styles.css';
 
-const Window = lazy(() => import('./components/Window'));
+// Utility function to generate random positions
+const getRandomPosition = () => {
+  const x = Math.floor(Math.random() * (window.innerWidth - 350));
+  const y = Math.floor(Math.random() * (window.innerHeight - 250));
+  return { x, y };
+};
 
-// Rest of App.js remains the same
+function App() {
+  // Initial window states
+  const initialWindowState = {
+    window1: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+    window2: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+    window3: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+    window4: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+  };
 
-return (
-  <div className="h-screen bg-gradient-to-br from-gray-200 to-gray-500 relative">
-    {/* Dark Mode Toggle */}
-    <div className="flex justify-end p-4">
-      <button
-        onClick={() => setIsDarkMode(!isDarkMode)}
-        className="bg-gray-800 text-white py-2 px-4 rounded"
-      >
-        Toggle Dark Mode
-      </button>
-    </div>
+  // State management
+  const [windows, setWindows] = useState(initialWindowState);
 
-    {/* Render each window component */}
-    <Suspense fallback={<div>Loading...</div>}>
+  // Function to toggle windows
+  const toggleWindow = (windowId, action) => {
+    setWindows((prevWindows) => {
+      const currentWindow = prevWindows[windowId];
+      switch (action.type) {
+        case 'close':
+          return {
+            ...prevWindows,
+            [windowId]: { ...currentWindow, visible: false },
+          };
+        case 'minimize':
+          return {
+            ...prevWindows,
+            [windowId]: { ...currentWindow, minimized: !currentWindow.minimized },
+          };
+        case 'maximize':
+          return {
+            ...prevWindows,
+            [windowId]: { ...currentWindow, maximized: !currentWindow.maximized },
+          };
+        case 'reopen':
+          return {
+            ...prevWindows,
+            [windowId]: {
+              ...currentWindow,
+              visible: true,
+              minimized: false,
+              maximized: false,
+              position: getRandomPosition(),
+            },
+          };
+        case 'move':
+          return {
+            ...prevWindows,
+            [windowId]: { ...currentWindow, position: action.payload },
+          };
+        default:
+          return prevWindows;
+      }
+    });
+  };
+
+  // Function to reset all windows
+  const resetWindows = () => {
+    setWindows({
+      window1: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+      window2: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+      window3: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+      window4: { visible: true, minimized: false, maximized: false, position: getRandomPosition() },
+    });
+  };
+
+  // Return statement inside the App function
+  return (
+    <div className="h-screen bg-gradient-to-br from-gray-200 to-gray-500 relative">
+      {/* Dark Mode Toggle */}
+      <div className="flex justify-end p-4">
+        <button
+          id="theme-toggle"
+          className="bg-gray-800 text-white py-2 px-4 rounded"
+          onClick={() => document.body.classList.toggle('dark')}
+        >
+          Toggle Dark Mode
+        </button>
+      </div>
+
+      {/* Render each window component */}
       {Object.keys(windows).map((windowId) => (
         windows[windowId].visible && (
           <Window
@@ -60,31 +128,32 @@ return (
           </Window>
         )
       ))}
-    </Suspense>
 
-    {/* Taskbar to manage closed windows */}
-    <div className="absolute bottom-0 left-0 right-0 bg-gray-800 p-2 flex justify-center space-x-4">
-      {Object.keys(windows).map((windowId) => (
-        !windows[windowId].visible && (
-          <button
-            key={windowId}
-            onClick={() => toggleWindow(windowId, { type: 'reopen' })}
-            className="bg-gray-600 text-white px-3 py-1 rounded shadow hover:bg-gray-700 transition flex items-center"
-          >
-            <span className="mr-2">{windowId.replace('window', 'W')}</span>
-            {windowId.replace('window', ' Window')}
-          </button>
-        )
-      ))}
-      <button
-        onClick={resetWindows}
-        className="bg-red-500 text-white px-3 py-1 rounded shadow hover:bg-red-600 transition flex items-center"
-      >
-        Reset All
-      </button>
+      {/* Taskbar to manage closed windows */}
+      <div className="absolute bottom-0 left-0 right-0 bg-gray-800 p-2 flex justify-center space-x-4">
+        {Object.keys(windows).map((windowId) => (
+          !windows[windowId].visible && (
+            <button
+              key={windowId}
+              onClick={() => toggleWindow(windowId, { type: 'reopen' })}
+              className="bg-gray-600 text-white px-3 py-1 rounded shadow hover:bg-gray-700 transition flex items-center"
+            >
+              {windowId.replace('window', 'Window ')}
+            </button>
+          )
+        ))}
+        <button
+          onClick={resetWindows}
+          className="bg-red-500 text-white px-3 py-1 rounded shadow hover:bg-red-600 transition flex items-center"
+        >
+          Reset All
+        </button>
+      </div>
+
+      {/* Start Menu (Optional Enhancement) */}
+      {/* <StartMenu windows={windows} toggleWindow={toggleWindow} /> */}
     </div>
+  );
+}
 
-    {/* Start Menu (Optional Enhancement) */}
-    <StartMenu windows={windows} toggleWindow={toggleWindow} />
-  </div>
-);
+export default App;
