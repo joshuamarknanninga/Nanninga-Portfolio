@@ -1,5 +1,8 @@
+// App.js
+
 import React, { useState } from 'react';
 import Window from './Window';
+import StartMenu from './StartMenu';
 import './tailwind.css';
 
 // Utility function to generate random positions based on the viewport dimensions
@@ -24,16 +27,22 @@ function App() {
   const toggleWindow = (windowId, action) => {
     setWindows((prevWindows) => {
       const currentWindow = prevWindows[windowId];
-      switch (action) {
+      switch (action.type) {
         case 'close':
           return {
             ...prevWindows,
             [windowId]: { ...currentWindow, visible: false },
           };
         case 'minimize':
-          return { ...prevWindows, [windowId]: { ...currentWindow, minimized: !currentWindow.minimized } };
+          return {
+            ...prevWindows,
+            [windowId]: { ...currentWindow, minimized: !currentWindow.minimized },
+          };
         case 'maximize':
-          return { ...prevWindows, [windowId]: { ...currentWindow, maximized: !currentWindow.maximized } };
+          return {
+            ...prevWindows,
+            [windowId]: { ...currentWindow, maximized: !currentWindow.maximized },
+          };
         case 'reopen':
           return {
             ...prevWindows,
@@ -78,9 +87,9 @@ function App() {
             isMinimized={windows[windowId].minimized}
             isMaximized={windows[windowId].maximized}
             position={windows[windowId].position}
-            onClose={() => toggleWindow(windowId, 'close')}
-            onMinimize={() => toggleWindow(windowId, 'minimize')}
-            onMaximize={() => toggleWindow(windowId, 'maximize')}
+            onClose={() => toggleWindow(windowId, { type: 'close' })}
+            onMinimize={() => toggleWindow(windowId, { type: 'minimize' })}
+            onMaximize={() => toggleWindow(windowId, { type: 'maximize' })}
             onMove={(position) => toggleWindow(windowId, { type: 'move', payload: position })}
           >
             {/* Window content */}
@@ -107,18 +116,34 @@ function App() {
         )
       ))}
 
-      {/* Reset Windows Link */}
-      <div className="absolute bottom-5 left-5">
-        <a
-          href="#"
+      {/* Taskbar to manage closed windows */}
+      <div className="absolute bottom-0 left-0 right-0 bg-gray-800 p-2 flex justify-center space-x-4">
+        {Object.keys(windows).map((windowId) => (
+          !windows[windowId].visible && (
+            <button
+              key={windowId}
+              onClick={() => toggleWindow(windowId, { type: 'reopen' })}
+              className="bg-gray-600 text-white px-3 py-1 rounded shadow hover:bg-gray-700 transition flex items-center"
+            >
+              {/* Optionally add icons here */}
+              <span className="mr-2">{windowId.replace('window', 'W')}</span>
+              {windowId.replace('window', ' Window')}
+            </button>
+          )
+        ))}
+        <button
           onClick={resetWindows}
-          className="bg-red-500 text-white p-2 rounded shadow-lg"
+          className="bg-red-500 text-white px-3 py-1 rounded shadow hover:bg-red-600 transition flex items-center"
         >
-          Reset All Windows
-        </a>
+          Reset All
+        </button>
       </div>
+
+      {/* Start Menu (Optional Enhancement) */}
+      <StartMenu windows={windows} toggleWindow={toggleWindow} />
     </div>
   );
 }
 
 export default App;
+
