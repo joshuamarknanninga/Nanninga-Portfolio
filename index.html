@@ -11,36 +11,28 @@
     <script src="/scripts.js" defer></script>
     <title>Nanninga Interactive Portfolio</title>
 </head>
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 transition duration-500"></body>
+<!-- Dark Mode Toggle -->
+    <div class="flex justify-end p-4">
+        <button id="theme-toggle" class="bg-gray-800 text-white py-2 px-4 rounded">Toggle Dark Mode</button>
+    </div>
 <body>
-    <div id="desktop">
-        <div id="window1" class="window" data-id="1">
-            <header class="window-header">
-                <h2>About Me</h2>
-                <button class="minimize">-</button>
-                <button class="maximize">[]</button>
-                <button class="close">x</button>
-            </header>
+    <header class="text-center py-12">
+        <h1 class="text-4xl font-bold">Joshua Mark Nanninga</h1>
+        <p class="text-xl mt-2">Full-Stack Developer | Web Enthusiast</p>
+    </header>
             <div class="window-content">
                 <p>Welcome to my portfolio! I am a full stack programmer with previous experience in teaching high school and middle school.</p>
             </div>
         </div>
 
-        <div id="window2" class="window" data-id="2">
-            <header class="window-header">
-                <h2>Projects</h2>
-                <button class="minimize">-</button>
-                <button class="maximize">[]</button>
-                <button class="close">x</button>
-            </header>
-            <div class="window-content">
-                <ul>
-                    <li>Interactive Portfolio</li>
-                    <li>Matrix WebGL Demonstration</li>
-                    <li>DanceStudioPro</li>
-                    <li>Burbz</li>
-                </ul>
-            </div>
+        <!-- Projects Section -->
+    <section id="projects" class="my-12">
+        <h2 class="text-3xl font-semibold text-center mb-4">Projects</h2>
+        <div id="projects-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Projects will be inserted dynamically by JavaScript -->
         </div>
+    </section>
 
         <div id="window3" class="window" data-id="3">
             <header class="window-header">
@@ -54,25 +46,62 @@
             </div>
         </div>
 
-        <div id="window4" class="window" data-id="4">
-            <header class="window-header">
-                <h2>Leave your contact information!</h2>
-                <button class="minimize">-</button>
-                <button class="maximize">[]</button>
-                <button class="close">x</button>
-            </header>
-            <div class="window-content">
-                <form>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" required>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" required>
-                    <label for="message">Message:</label>
-                    <textarea id="message" rows="5" required></textarea>
-                    <button type="submit">Send</button>
-                </form>
-            </div>
+        <!-- Testimonials Section -->
+    <section id="testimonials" class="my-12">
+        <h2 class="text-3xl font-semibold text-center mb-4">Testimonials</h2>
+        <div id="testimonials-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Testimonials will be inserted dynamically by JavaScript -->
         </div>
+    </section>
     </div>
+    <!-- Footer -->
+    <footer class="text-center py-6">
+        <p>&copy; 2024 Joshua Mark Nanninga. All rights reserved.</p>
+    </footer>
+
+    <!-- JS for dark mode toggle and dynamic content -->
+    <script>
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+        });
+
+        // Projects Data (can be fetched from API in future)
+        const projects = [
+            { title: 'Project One', description: 'A cool project using React.', link: '#' },
+            { title: 'Project Two', description: 'Another great project built with Vue.', link: '#' },
+            { title: 'Project Three', description: 'A web app built using Next.js.', link: '#' },
+        ];
+
+        const projectsList = document.getElementById('projects-list');
+        projects.forEach(project => {
+            const projectCard = `
+                <div class="border p-4 rounded-lg shadow-lg hover:shadow-xl transition">
+                    <h3 class="text-2xl font-semibold mb-2">${project.title}</h3>
+                    <p>${project.description}</p>
+                    <a href="${project.link}" class="text-blue-500 hover:underline mt-2 block">View Project</a>
+                </div>
+            `;
+            projectsList.innerHTML += projectCard;
+        });
+
+        // Testimonials Data
+        const testimonials = [
+            { name: 'Client One', feedback: 'Joshua did an amazing job on our project!' },
+            { name: 'Client Two', feedback: 'Highly recommend working with Joshua!' },
+        ];
+
+        const testimonialsList = document.getElementById('testimonials-list');
+        testimonials.forEach(testimonial => {
+            const testimonialCard = `
+                <div class="border p-4 rounded-lg shadow-lg hover:shadow-xl transition">
+                    <p>"${testimonial.feedback}"</p>
+                    <p class="mt-2 font-bold">- ${testimonial.name}</p>
+                </div>
+            `;
+            testimonialsList.innerHTML += testimonialCard;
+        });
+    </script>
 </body>
 </html>
