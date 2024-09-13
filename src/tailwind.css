@@ -4,4 +4,9 @@
 
 /* Custom window styling */
 .window {
-  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ea
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+.window:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
