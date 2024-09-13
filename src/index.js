@@ -1,0 +1,14 @@
+// src/index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './tailwind.css'; // Tailwind CSS
+import './styles.css';   // Custom Styles
+
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);

@@ -1,8 +1,8 @@
 // App.js
 
 import React, { useState } from 'react';
-import Window from './Window';
-import StartMenu from './StartMenu';
+import Window from '../Window';
+import StartMenu from '../StartMenu';
 import './tailwind.css';
 
 // Utility function to generate random positions based on the viewport dimensions
