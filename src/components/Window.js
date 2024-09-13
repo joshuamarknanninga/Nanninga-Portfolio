@@ -45,17 +45,4 @@ function Window({ title, isMinimized, isMaximized, onClose, onMinimize, onMaximi
             <img
               src="https://cdn.iconfinder.com/data/icons/feather/24/x-512.png"
               alt="Close"
-              className="w-6 h-6 cursor-pointer inline-block mx-1"
-              onClick={onClose}
-            />
-          </div>
-        </div>
-        <div className="window-content p-4">
-          {children}
-        </div>
-      </motion.div>
-    </Draggable>
-  );
-}
-
-export default Window;
+              className="w-6 h-6 cursor-pointer inline-block mx
