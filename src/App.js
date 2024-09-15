@@ -1,8 +1,8 @@
 // App.js
 
 import React, { useState } from 'react';
-import Window from './Window';
-import StartMenu from './StartMenu'; // If implemented
+import Window from './components/Window';
+import StartMenu from './components/StartMenu';
 import './tailwind.css';
 
 // Utility function to generate random positions
@@ -151,7 +151,7 @@ function App() {
       </div>
 
       {/* Start Menu (Optional Enhancement) */}
-      {/* <StartMenu windows={windows} toggleWindow={toggleWindow} /> */}
+      <StartMenu windows={windows} toggleWindow={toggleWindow} />
     </div>
   );
 }
