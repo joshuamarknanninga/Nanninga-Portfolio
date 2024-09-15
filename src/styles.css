@@ -53,8 +53,12 @@ body {
 /* Form styling for contact window */
 form input, form textarea, form button {
     width: 100%;
-    margin: 8px 0;
-    padding: 8px;
+  max-width: 400px;
+}
+
+.window-content {
+  max-width: 600px;
+  padding: 20px;
 }
 
 form button {
